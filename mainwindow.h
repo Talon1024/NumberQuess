@@ -28,12 +28,13 @@ private slots:
 
 private:
     Ui::MainWindow* ui;
-    QRegularExpression* RE_NUM;
-    Game* g;
+    QRegularExpression RE_NUM;
+    Game g;
 
     QString gameInfoFmt, gameStatusFmt;
 
     void updateInfo(bool);
+    void gameOver();
 };
 
 #endif // MAINWINDOW_H

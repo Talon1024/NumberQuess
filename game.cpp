@@ -19,12 +19,16 @@ int Game::checkAnswer(int answer) {
 }
 
 int Game::guess(int answer) {
-    if (guessesLeft == 0) {
-        gameOver = true;
-        return -2;
-    } else {
-        --guessesLeft;
-        return checkAnswer(answer);
+    --guessesLeft;
+    int retval = checkAnswer(answer);
+    if (retval == 0) return retval;
+    else {
+        if (guessesLeft == 0) {
+            gameOver = true;
+            return -2;
+        } else {
+            return checkAnswer(answer);
+        }
     }
 }
 
