@@ -32,6 +32,8 @@ private:
     Game* g;
 
     QString gameInfoFmt, gameStatusFmt;
+
+    void updateInfo(bool);
 };
 
 #endif // MAINWINDOW_H

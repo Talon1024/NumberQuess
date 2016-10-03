@@ -21,10 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
                                  QString().setNum(g->minNumber),
                                  QString().setNum(g->maxNumber)
                                  ));
-    ui->lblGameStatus->setText(gameStatusFmt.arg(
-                                   QString().setNum(g->getGuessesLeft()),
-                                   g->getGuessesLeft() != 1 ? "guesses" : "guess"));
-    ui->lblAnsStatus->setText("");
+    updateInfo(true);
 }
 
 MainWindow::~MainWindow()
@@ -32,36 +29,46 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::updateInfo(bool eraseStatus = false) {
+    if (eraseStatus) ui->lblAnsStatus->setText("");
+    ui->lblGameStatus->setText(gameStatusFmt.arg(
+                                   QString().setNum(g->getGuessesLeft()),
+                                   g->getGuessesLeft() != 1 ? "guesses" : "guess"));
+}
+
 void MainWindow::on_btnSubmit_clicked()
 {
-    // Check user input - surely, there's a better way to do it with Qt.
-    QString ansString = ui->txtUserInput->text().trimmed();
-    QRegularExpressionMatch match = RE_NUM->match(ansString);
-    if (match.hasMatch()) {
-        int correct = g->guess(ansString.toInt());
-
-        if (correct == 1) { // greater than my number
-            ui->lblAnsStatus->setText("Too high! Try again.");
-        } else if (correct == -1) {
-            ui->lblAnsStatus->setText("Too low! Try again.");
-        } else if (correct == -2) {
-            ui->lblAnsStatus->setText("Game over! Press reset to play again.");
-            QMessageBox::information(this, "Game over", "Game over! Press reset to play again.");
-        } else if (correct == 0) {
-            ui->lblAnsStatus->setText(QString("Congratulations! You successfully guessed the number in %1 tries.").arg(g->startingGuesses - g->getGuessesLeft()));
-        }
-
-        ui->lblGameStatus->setText(gameStatusFmt.arg(
-                                       QString().setNum(g->getGuessesLeft()),
-                                       g->getGuessesLeft() != 1 ? "guesses" : "guess"));
+    if (g->isOver()) {
+        QMessageBox::warning(this, "Game over", "Game over! Press reset to play again.");
     } else {
-        QMessageBox::warning(this, "Invalid input", "You must enter a valid integer.");
+        // Check user input - surely, there's a better way to do it with Qt.
+        QString ansString = ui->txtUserInput->text().trimmed();
+        QRegularExpressionMatch match = RE_NUM->match(ansString);
+        if (match.hasMatch()) {
+            int correct = g->guess(ansString.toInt());
+
+            if (correct == 1) { // greater than my number
+                ui->lblAnsStatus->setText("Too high! Try again.");
+            } else if (correct == -1) {
+                ui->lblAnsStatus->setText("Too low! Try again.");
+            } else if (correct == -2) {
+                ui->lblAnsStatus->setText("Game over! Press reset to play again.");
+                QMessageBox::information(this, "Game over", "Game over! Press reset to play again.");
+            } else if (correct == 0) {
+                ui->lblAnsStatus->setText(QString("Congratulations! You successfully guessed the number in %1 tries.").arg(g->startingGuesses - g->getGuessesLeft()));
+            }
+
+            updateInfo();
+        } else {
+            QMessageBox::warning(this, "Invalid input", "You must enter a valid integer.");
+        }
     }
 }
 
 void MainWindow::on_btnReset_clicked()
 {
     g->reset();
+    updateInfo(true);
 }
 
 void MainWindow::on_actionRestart_triggered()
