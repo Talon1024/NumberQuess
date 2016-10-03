@@ -93,14 +93,14 @@
      <height>31</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuHellllllllllllllllllllllllllllo">
+   <widget class="QMenu" name="menuGame">
     <property name="title">
      <string>&amp;Game</string>
     </property>
     <addaction name="actionRestart"/>
     <addaction name="actionQ_uit"/>
    </widget>
-   <addaction name="menuHellllllllllllllllllllllllllllo"/>
+   <addaction name="menuGame"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

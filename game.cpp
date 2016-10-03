@@ -13,6 +13,7 @@ int Game::checkAnswer(int answer) {
     } else if (answer < myNumber) {
         return -1;
     } else {
+        gameOver = true;
         return 0;
     }
 }
@@ -20,6 +21,7 @@ int Game::checkAnswer(int answer) {
 int Game::guess(int answer) {
     --guessesLeft;
     if (guessesLeft == 0) {
+        gameOver = true;
         return -2;
     } else {
         return checkAnswer(answer);
@@ -27,6 +29,7 @@ int Game::guess(int answer) {
 }
 
 void Game::reset() {
+    gameOver = false;
     std::srand(std::time(NULL));
     myNumber = (std::rand() % (maxNumber - minNumber)) + minNumber;
     guessesLeft = startingGuesses;
@@ -41,5 +44,5 @@ int Game::getNumber() {
 }
 
 bool Game::isOver() {
-    return guessesLeft > 0;
+    return gameOver;
 }

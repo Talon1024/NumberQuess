@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
                                  ));
     ui->lblGameStatus->setText(gameStatusFmt.arg(
                                    QString().setNum(g->getGuessesLeft()),
-                                   g->getGuessesLeft() > 1 ? "guesses" : "guess"));
+                                   g->getGuessesLeft() != 1 ? "guesses" : "guess"));
     ui->lblAnsStatus->setText("");
 }
 
@@ -48,8 +48,12 @@ void MainWindow::on_btnSubmit_clicked()
             ui->lblAnsStatus->setText("Game over! Press reset to play again.");
             QMessageBox::information(this, "Game over", "Game over! Press reset to play again.");
         } else if (correct == 0) {
-            ui->lblAnsStatus->setText("Congratulations! You successfully guessed the number in %1 tries.");
+            ui->lblAnsStatus->setText(QString("Congratulations! You successfully guessed the number in %1 tries.").arg(g->startingGuesses - g->getGuessesLeft()));
         }
+
+        ui->lblGameStatus->setText(gameStatusFmt.arg(
+                                       QString().setNum(g->getGuessesLeft()),
+                                       g->getGuessesLeft() != 1 ? "guesses" : "guess"));
     } else {
         QMessageBox::warning(this, "Invalid input", "You must enter a valid integer.");
     }
@@ -67,5 +71,5 @@ void MainWindow::on_actionRestart_triggered()
 
 void MainWindow::on_actionQ_uit_triggered()
 {
-    exit(0);
+    close();
 }

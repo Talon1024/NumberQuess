@@ -8,6 +8,7 @@ private:
     int myNumber;
     int guessesLeft;
     int checkAnswer(int answer);
+    bool gameOver;
 public:
     static const int maxNumber = 10;
     static const int minNumber = 1;
