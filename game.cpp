@@ -19,11 +19,11 @@ int Game::checkAnswer(int answer) {
 }
 
 int Game::guess(int answer) {
-    --guessesLeft;
     if (guessesLeft == 0) {
         gameOver = true;
         return -2;
     } else {
+        --guessesLeft;
         return checkAnswer(answer);
     }
 }
