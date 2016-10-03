@@ -20,3 +20,6 @@ HEADERS  += mainwindow.h \
     game.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    README.md
