@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
                                  QString().setNum(g.minNumber),
                                  QString().setNum(g.maxNumber)
                                  ));
+    ui->statusBar->addWidget(ui->lblAnsStatus);
+    ui->statusBar->addWidget(ui->lblGameStatus);
     updateInfo(true);
 }
 
@@ -31,9 +33,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::updateInfo(bool eraseStatus = false) {
     if (eraseStatus) ui->lblAnsStatus->setText("");
-    ui->lblGameStatus->setText(gameStatusFmt.arg(
-                                   QString().setNum(g.getGuessesLeft()),
-                                   g.getGuessesLeft() != 1 ? "guesses" : "guess"));
+    if (!g.isOver()) {
+        ui->lblGameStatus->setText(gameStatusFmt.arg(
+                        QString().setNum(g.getGuessesLeft()),
+                        g.getGuessesLeft() != 1 ? "guesses" : "guess"));
+    } else {
+        ui->lblGameStatus->setText("");
+    }
+
 }
 
 void MainWindow::gameOver() {
@@ -62,7 +69,10 @@ void MainWindow::on_btnSubmit_clicked()
                 ui->lblAnsStatus->setText("Game over! Press reset to play again.");
             } else if (correct == 0) {
                 gameOver();
-                ui->lblAnsStatus->setText(QString("Congratulations! You successfully guessed the number in %1 tries.").arg(g.startingGuesses - g.getGuessesLeft()));
+                ui->lblAnsStatus->setText(
+                            QString("Congratulations! You successfully guessed the number in %1 %2.").arg(
+                                QString().setNum(g.startingGuesses - g.getGuessesLeft()),
+                                g.startingGuesses - g.getGuessesLeft() != 1 ? "tries" : "try"));
             }
 
             updateInfo();
