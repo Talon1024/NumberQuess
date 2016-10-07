@@ -36,7 +36,7 @@ void MainWindow::updateInfo(bool eraseStatus = false) {
     if (!g.isOver()) {
         ui->lblGameStatus->setText(gameStatusFmt.arg(
                         QString().setNum(g.getGuessesLeft()),
-                        g.getGuessesLeft() != 1 ? "guesses" : "guess"));
+                        g.getGuessesLeft() != 1 ? tr("guesses") : tr("guess")));
     } else {
         ui->lblGameStatus->setText("");
     }
@@ -52,7 +52,7 @@ void MainWindow::on_btnSubmit_clicked()
 {
     if (g.isOver()) {
         gameOver();
-        QMessageBox::warning(this, "Game over", "Game over! Press reset to play again.");
+        QMessageBox::warning(this, tr("Game over"), tr("Game over! Press reset to play again."));
     } else {
         // Check user input - surely, there's a better way to do it with Qt.
         QString ansString = ui->txtUserInput->text().trimmed();
@@ -61,23 +61,23 @@ void MainWindow::on_btnSubmit_clicked()
             int correct = g.guess(ansString.toInt());
 
             if (correct == 1) { // greater than my number
-                ui->lblAnsStatus->setText("Too high! Try again.");
+                ui->lblAnsStatus->setText(tr("Too high! Try again."));
             } else if (correct == -1) {
-                ui->lblAnsStatus->setText("Too low! Try again.");
+                ui->lblAnsStatus->setText(tr("Too low! Try again."));
             } else if (correct == -2) {
                 gameOver();
-                ui->lblAnsStatus->setText("Game over! Press reset to play again.");
+                ui->lblAnsStatus->setText(tr("Game over! Press reset to play again."));
             } else if (correct == 0) {
                 gameOver();
                 ui->lblAnsStatus->setText(
-                            QString("Congratulations! You successfully guessed the number in %1 %2.").arg(
+                            QString(tr("Congratulations! You successfully guessed the number in %1 %2.")).arg(
                                 QString().setNum(g.startingGuesses - g.getGuessesLeft()),
-                                g.startingGuesses - g.getGuessesLeft() != 1 ? "tries" : "try"));
+                                g.startingGuesses - g.getGuessesLeft() != 1 ? tr("tries") : tr("try")));
             }
 
             updateInfo();
         } else {
-            QMessageBox::warning(this, "Invalid input", "You must enter a valid integer.");
+            QMessageBox::warning(this, tr("Invalid input"), tr("You must enter a valid integer."));
         }
     }
 }

@@ -23,3 +23,6 @@ FORMS    += mainwindow.ui
 
 DISTFILES += \
     README.md
+
+TRANSLATIONS += \
+    NumberQuess_fr.ts
