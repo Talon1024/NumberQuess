@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setWindowTitle(tr("Number Guessing Game"));
     g = Game();
     RE_NUM = QRegularExpression("^\\d+$");
 
