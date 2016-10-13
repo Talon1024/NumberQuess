@@ -32,9 +32,7 @@ private:
     QRegularExpression RE_NUM;
     Game g;
 
-    QLabel* lblGameStatus;
-    QLabel* lblAnsStatus;
-
+    QLabel *lblGameStatus, *lblAnsStatus;
     QString gameInfoFmt, gameStatusFmt;
 
     void updateInfo(bool);
