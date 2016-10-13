@@ -4,6 +4,7 @@
 #include <QString>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+#include <QLabel>
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -11,19 +12,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle(tr("Number Guessing Game"));
+    setWindowTitle(tr("Number Guessing Game"));
     g = Game();
     RE_NUM = QRegularExpression("^\\d+$");
 
+    lblGameStatus = new QLabel(tr("%1 %2 left."));
+    lblAnsStatus = new QLabel("");
+
     gameInfoFmt = ui->lblGameInfo->text();
-    gameStatusFmt = ui->lblGameStatus->text();
+    gameStatusFmt = lblGameStatus->text();
 
     ui->lblGameInfo->setText(gameInfoFmt.arg(
                                  QString().setNum(g.minNumber),
                                  QString().setNum(g.maxNumber)
                                  ));
-    ui->statusBar->addWidget(ui->lblAnsStatus);
-    ui->statusBar->addWidget(ui->lblGameStatus);
+    ui->statusBar->addWidget(lblAnsStatus);
+    ui->statusBar->addWidget(lblGameStatus);
     updateInfo(true);
 }
 
@@ -33,13 +37,13 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::updateInfo(bool eraseStatus = false) {
-    if (eraseStatus) ui->lblAnsStatus->setText("");
+    if (eraseStatus) lblAnsStatus->setText("");
     if (!g.isOver()) {
-        ui->lblGameStatus->setText(gameStatusFmt.arg(
+        lblGameStatus->setText(gameStatusFmt.arg(
                         QString().setNum(g.getGuessesLeft()),
                         g.getGuessesLeft() != 1 ? tr("guesses") : tr("guess")));
     } else {
-        ui->lblGameStatus->setText("");
+        lblGameStatus->setText("");
     }
 
 }
@@ -62,15 +66,15 @@ void MainWindow::on_btnSubmit_clicked()
             int correct = g.guess(ansString.toInt());
 
             if (correct == 1) { // greater than my number
-                ui->lblAnsStatus->setText(tr("Too high! Try again."));
+                lblAnsStatus->setText(tr("Too high! Try again."));
             } else if (correct == -1) {
-                ui->lblAnsStatus->setText(tr("Too low! Try again."));
+                lblAnsStatus->setText(tr("Too low! Try again."));
             } else if (correct == -2) {
                 gameOver();
-                ui->lblAnsStatus->setText(tr("Game over! Press reset to play again."));
+                lblAnsStatus->setText(tr("Game over! Press reset to play again."));
             } else if (correct == 0) {
                 gameOver();
-                ui->lblAnsStatus->setText(
+                lblAnsStatus->setText(
                             QString(tr("Congratulations! You successfully guessed the number in %1 %2.")).arg(
                                 QString().setNum(g.startingGuesses - g.getGuessesLeft()),
                                 g.startingGuesses - g.getGuessesLeft() != 1 ? tr("tries") : tr("try")));

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QRegularExpression>
+#include <QLabel>
 #include "game.h"
 
 namespace Ui {
@@ -30,6 +31,9 @@ private:
     Ui::MainWindow* ui;
     QRegularExpression RE_NUM;
     Game g;
+
+    QLabel* lblGameStatus;
+    QLabel* lblAnsStatus;
 
     QString gameInfoFmt, gameStatusFmt;
 

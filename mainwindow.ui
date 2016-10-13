@@ -42,16 +42,6 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="lblGameStatus">
-      <property name="text">
-       <string>%1 %2 left.</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::PlainText</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
      <widget class="QLineEdit" name="txtUserInput"/>
     </item>
     <item>
@@ -71,16 +61,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QLabel" name="lblAnsStatus">
-      <property name="text">
-       <string>ba dum tssss</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::PlainText</enum>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>
