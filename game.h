@@ -10,9 +10,9 @@ private:
     int checkAnswer(int answer);
     bool gameOver;
 public:
-    int maxNumber = 10;
-    int minNumber = 1;
-    int startingGuesses = 5;
+    int maxNumber;
+    int minNumber;
+    int startingGuesses;
     Game();
     Game(int minNum, int maxNum, int guesses);
     int guess(int answer);
