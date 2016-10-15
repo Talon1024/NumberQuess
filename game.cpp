@@ -35,7 +35,7 @@ int Game::guess(int answer) {
 void Game::reset() {
     gameOver = false;
     std::srand(std::time(NULL));
-    myNumber = (std::rand() % (maxNumber - minNumber)) + minNumber;
+    myNumber = (std::rand() % (maxNumber - minNumber + 1)) + minNumber;
     guessesLeft = startingGuesses;
 }
 

@@ -9,15 +9,13 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    RE_NUM("^\\d+$"),
+    lblGameStatus(new QLabel(tr("%1 %2 left."))),
+    lblAnsStatus(new QLabel(""))
 {
     ui->setupUi(this);
     setWindowTitle(tr("Number Guessing Game"));
-    g = Game();
-    RE_NUM = QRegularExpression("^\\d+$");
-
-    lblGameStatus = new QLabel(tr("%1 %2 left."));
-    lblAnsStatus = new QLabel("");
 
     gameInfoFmt = ui->lblGameInfo->text();
     gameStatusFmt = lblGameStatus->text();
@@ -34,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete lblAnsStatus;
+    delete lblGameStatus;
 }
 
 void MainWindow::updateInfo(bool eraseStatus = false) {
