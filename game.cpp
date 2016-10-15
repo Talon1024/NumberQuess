@@ -4,6 +4,17 @@
 
 Game::Game()
 {
+    minNumber = 1;
+    maxNumber = 10;
+    startingGuesses = 5;
+    reset();
+}
+
+Game::Game(int minNum, int maxNum, int guesses)
+{
+    minNumber = minNum;
+    maxNumber = maxNum;
+    startingGuesses = guesses;
     reset();
 }
 

@@ -10,10 +10,11 @@ private:
     int checkAnswer(int answer);
     bool gameOver;
 public:
-    static const int maxNumber = 10;
-    static const int minNumber = 1;
-    static const int startingGuesses = 5;
+    int maxNumber = 10;
+    int minNumber = 1;
+    int startingGuesses = 5;
     Game();
+    Game(int minNum, int maxNum, int guesses);
     int guess(int answer);
     void reset();
     int getGuessesLeft();
