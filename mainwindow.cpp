@@ -72,6 +72,8 @@ void MainWindow::on_btnSubmit_clicked()
             } else if (correct == -2) {
                 gameOver();
                 lblAnsStatus->setText(tr("Game over! Press reset to play again."));
+            } else if (correct == 2) { // Out of range
+                lblAnsStatus->setText(tr("Number out of range! Try again."));
             } else if (correct == 0) {
                 gameOver();
                 lblAnsStatus->setText(

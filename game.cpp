@@ -19,6 +19,7 @@ Game::Game(int minNum, int maxNum, int guesses)
 }
 
 int Game::checkAnswer(int answer) {
+    if (answer < minNumber || answer > maxNumber) return 2;
     if (answer > myNumber) {
         return 1;
     } else if (answer < myNumber) {
@@ -30,8 +31,8 @@ int Game::checkAnswer(int answer) {
 }
 
 int Game::guess(int answer) {
-    --guessesLeft;
     int retval = checkAnswer(answer);
+    if (retval != 2) --guessesLeft;
     if (retval == 0) return retval;
     else {
         if (guessesLeft == 0) {
